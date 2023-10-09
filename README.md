@@ -15,5 +15,5 @@ Routes created
 
 **Client:** React, Redux, React-router, Bootstrap
 
-**Server:** Node, Express, Morgan,jsonwebtoken,bcrypt 
+**Server:** Node, Express, Morgan, jsonwebtoken, bcrypt 
 
