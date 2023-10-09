@@ -1,5 +1,5 @@
 
-# Ecommerce in progress using the Mern Stack
+# Ecommerce in progress using the MERN Stack
 Personal ecommerce project with all its functions, user generation, admin panel, and CRUD operations
 
 
@@ -13,7 +13,7 @@ Routes created
 
 ## Tech Stack
 
-**Client:** React, UseContext, React-router, Bootstrap
+**Client:** React, Redux, React-router, Bootstrap
 
 **Server:** Node, Express, Morgan,jsonwebtoken,bcrypt 
 
