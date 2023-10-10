@@ -1,34 +1,103 @@
 import Layout from '../../components/Layout';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const myHost = import.meta.env.VITE_REACT_APP_API;
+  const haddleSumit = async (e) => {
+    e.preventDefault();
+    console.log('datos enviados');
+
+    try {
+      const res = await axios.post(`${myHost}/api/v1/auth/register`, {
+        name,
+        email,
+        password,
+        phone,
+        address,
+      });
+      if (res && res.data.success) {
+        toast.success(res.data.message);
+        console.log(res.data.message);
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went Wrong');
+    }
+  };
+
   return (
     <div>
-      <Layout title="Register now">
-        <div className="register">
-          <form>
+      <Layout title="Register - Ecommerce APP">
+        <div className="form-container">
+          <form onSubmit={haddleSumit}>
+            <h4 className="title">REGISTER NOW</h4>
             <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Name
-              </label>
               <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                className="form-control"
+                id="exampleInputName"
+                placeholder="Enter Your Name"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 type="text"
                 className="form-control"
                 id="exampleInputEmail1"
+                placeholder="Enter Your Email"
+                required
               />
-              {/*eslint-disable*/}
-              <div id="emailHelp" className="form-text">
-                We'll never share your data with anyone else.
-              </div>
-              {/*eslint-enable*/}
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
-              </label>
               <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 className="form-control"
                 id="exampleInputPassword1"
+                placeholder="Enter Your Password"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                type="text"
+                className="form-control"
+                id="exampleInputPhone"
+                placeholder="Enter Your Phone"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                type="text"
+                className="form-control"
+                id="exampleInputAddress"
+                placeholder="Enter Your Address"
+                required
               />
             </div>
             <button type="submit" className="btn btn-primary">

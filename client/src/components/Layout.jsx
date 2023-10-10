@@ -1,6 +1,8 @@
 import Footer from './Footer';
 import Header from './Header';
 import { Helmet } from 'react-helmet';
+import { Toaster } from 'react-hot-toast';
+
 /*eslint-disable*/
 const Layout = ({ children, description, keywords, author, title }) => {
   /* eslint-enable */
@@ -14,7 +16,10 @@ const Layout = ({ children, description, keywords, author, title }) => {
         <title>{title}</title>
       </Helmet>
       <Header />
-      <main style={{ minHeight: '70vh' }}>{children}</main>
+      <main style={{ minHeight: '70vh' }}>
+        <Toaster autoClose={3000} />
+        {children}
+      </main>
       <Footer />
     </>
   );

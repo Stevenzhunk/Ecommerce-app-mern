@@ -8,14 +8,14 @@ export const registerController = async (req, res) => {
     const { name, email, password, phone, address } = req.body;
     //model error empty field
     if (!name || !email || !password || !phone || !address) {
-      return res.status(400).json({ error: 'All field are Required' });
+      return res.status(400).json({ message: 'All field are Required' });
     }
     //check exist
     const existingUser = await userModel.findOne({ email });
     //existing user
     if (existingUser) {
       res.status(409).send({
-        success: true,
+        success: false,
         message: 'User already exists please login',
       });
     }
@@ -33,7 +33,7 @@ export const registerController = async (req, res) => {
 
     res.status(201).send({
       success: true,
-      message: 'User registered successfully',
+      message: 'User registered Successfully',
       user,
     });
   } catch (error) {
