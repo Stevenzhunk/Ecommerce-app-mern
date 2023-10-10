@@ -2,7 +2,7 @@ import Layout from '../components/Layout';
 
 const HomePage = () => {
   return (
-    <Layout>
+    <Layout title={'Best offers '}>
       <h1>HomePage</h1>
     </Layout>
   );
