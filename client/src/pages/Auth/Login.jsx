@@ -1,13 +1,15 @@
 import Layout from '../../components/Layout';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../context/auth';
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [auth, setAuth] = useAuth();
 
   const myHost = import.meta.env.VITE_REACT_APP_API;
   const haddleSumit = async (e) => {
@@ -22,9 +24,15 @@ const Login = () => {
       if (res && res.data.success) {
         toast.success(res.data.message);
         console.log(res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem('auth', JSON.stringify(res.data));
         setTimeout(() => {
           navigate('/');
-        }, 2000);
+        }, 3000);
       } else {
         toast.error(res.data.message);
       }

@@ -1,6 +1,20 @@
+// import { GiShoppingBag } from 'react-icons/gi';   <---- maybe future other icon
 import { NavLink, Link } from 'react-router-dom';
-// import { GiShoppingBag } from 'react-icons/gi';
+import { useAuth } from '../context/auth.jsx';
+import toast from 'react-hot-toast';
 const Header = () => {
+  const [auth, setAuth] = useAuth();
+  const handleLogOut = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: '',
+    });
+    localStorage.removeItem('auth');
+    setTimeout(() => {
+      toast.success('Logout Successfully');
+    }, 1000);
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -28,16 +42,30 @@ const Header = () => {
                 Category
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/register">
-                Register
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                Login
-              </NavLink>
-            </li>
+            {!auth.user ? (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/register">
+                    Register
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  onClick={handleLogOut}
+                  className="nav-link"
+                  to="/login"
+                >
+                  Logout
+                </NavLink>
+              </>
+            )}
             <li className="nav-item">
               <NavLink className="nav-link" to="/cart">
                 Cart (0)
