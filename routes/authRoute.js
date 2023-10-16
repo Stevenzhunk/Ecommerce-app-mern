@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  forgorPasswordController,
   loginController,
   registerController,
   testController,
@@ -17,6 +18,9 @@ router.post('/login', loginController);
 
 //for test
 router.get('/test', requireSigIn, isAdmin, testController);
+
+//forgot passowrd
+router.post('/forgot-password', forgorPasswordController);
 
 //protected route auth
 router.get('/user-auth', requireSigIn, (req, res) => {

@@ -5,9 +5,9 @@ import jwt from 'jsonwebtoken';
 //Register
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, answer } = req.body;
     //model error empty field
-    if (!name || !email || !password || !phone || !address) {
+    if (!name || !email || !password || !phone || !address || answer) {
       return res.status(400).json({ message: 'All field are Required' });
     }
     //check exist
@@ -29,6 +29,7 @@ export const registerController = async (req, res) => {
       password: hashedPassword,
       phone,
       address,
+      answer,
     }).save();
 
     res.status(201).send({
@@ -98,6 +99,44 @@ export const loginController = async (req, res) => {
   }
 };
 
+//test protected routes
 export const testController = async (req, res) => {
   res.send('Protected Route');
+};
+
+//forgor Password
+export const forgorPasswordController = async (req, res) => {
+  try {
+    const { email, newPassword, answer } = req.body;
+    //required field
+    if (!email) {
+      return res.status(402).json({ message: 'email is required' });
+    }
+    if (!newPassword) {
+      return res.status(402).json({ message: 'New Password is required' });
+    }
+    if (!answer) {
+      return res.status(402).json({ message: 'answer is required' });
+    }
+    //find user-question (check)
+    const user = await userModel.findOne({ email, answer });
+    if (!user) {
+      return res
+        .status(404)
+        .send({ message: 'User Not Found or Wrong Answer' });
+    }
+
+    //crypt newPassword
+    const hashed = await hashPassword(newPassword);
+    await userModel.findByIdAndUpdate(user._id, { password: hashed });
+    //update password
+  } catch (error) {
+    //error password method
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      mesage: 'Error Password Reset',
+      error,
+    });
+  }
 };

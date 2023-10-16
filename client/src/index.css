@@ -146,4 +146,5 @@
 .dont-user-container {
   display: flex;
   padding: 1rem;
+  justify-content: center;
 }

@@ -11,6 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [answer, setAnswer] = useState('');
   const myHost = import.meta.env.VITE_REACT_APP_API;
   const haddleSumit = async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ const Register = () => {
         password,
         phone,
         address,
+        answer,
       });
       if (res && res.data.success) {
         toast.success(res.data.message);
@@ -97,6 +99,23 @@ const Register = () => {
                 className="form-control"
                 id="exampleInputAddress"
                 placeholder="Enter Your Address"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              Select secret Question
+              <select id="select">
+                <option value="">First Car</option>
+                <option value="">Favorite Sport</option>
+                <option value="">Favorite Food</option>
+              </select>
+              <input
+                value={address}
+                onChange={(e) => setAnswer(e.target.value)}
+                type="text"
+                className="form-control"
+                id="exampleInputAddress"
+                placeholder="Select your favorite sport"
                 required
               />
             </div>
