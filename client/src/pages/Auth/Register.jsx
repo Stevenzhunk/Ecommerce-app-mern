@@ -110,7 +110,7 @@ const Register = () => {
                 <option value="">Favorite Food</option>
               </select>
               <input
-                value={address}
+                value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
                 type="text"
                 className="form-control"
